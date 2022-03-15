@@ -51,8 +51,8 @@ export default function Panel() {
                                 <Th>Fecha</Th>
                                 <Th>Monto</Th>
                                 <Th>Crypto</Th>
-                                <Th>Precio de token</Th>
-                                <Th>Balance</Th>
+                                <Th>Precio que lo compré</Th>
+                                <Th>Precio actual</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
