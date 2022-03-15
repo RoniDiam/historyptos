@@ -34,12 +34,19 @@ export default function Panel() {
             method: 'get',
             url: urlCoinGecko,
         }).then(response => {
+
             console.log(response.data);
+            setCurrentPrice(response.data.map(crypto => {
+                return ({
+                    id: crypto.id,
+                    currentPrice: crypto.current_price
+                })
+            }));
         }).catch(err => {
             console.log(err);
         });
     }, []);
-
+    console.log(currentPrice);
     return (
         <div>
             <Center h="100%">
@@ -65,6 +72,7 @@ export default function Panel() {
                                             <Td isNumeric>{item.amount}</Td>
                                             <Td>{item.crypto}</Td>
                                             <Td>{item.priceCrypto}</Td>
+                                            <Td>{currentPrice.find(element => element.id == item.crypto).currentPrice}</Td>
                                         </Tr>
                                     );
                                 })
