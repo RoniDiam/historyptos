@@ -10,3 +10,5 @@ Luego de registrar la compra, te lleva a un panel donde se observa la fecha, mon
 Las tecnologías usadas para realizar el challenge fue: Node JS como framework, Serverless + React JS. Y usé DynamoDB como gestor de base de datos.
 
 No use autenticación y no permito multiples usuarios. Todas las compras colaboran a mi usuario. Esta decisión fue tomada ya que yo sería el único usuario y quiero que la información sea pública y visible, por lo tanto, todos la pueden ver.
+
+Utilicé la API de Coin Gecko (https://www.coingecko.com/en/api/documentation) ya que me resultó muy accesible traer información de esta y porque esta muy buena la documentación.
