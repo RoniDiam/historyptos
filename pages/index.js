@@ -1,4 +1,4 @@
-import { Text, Input, Stack, HStack, Select, Button } from '@chakra-ui/react'
+import { Text, Input, Stack, HStack, Select, Box, Button, Alert, AlertIcon, AlertTitle, AlertDescription, Spinner } from '@chakra-ui/react'
 import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useRouter } from "next/router";
@@ -8,6 +8,7 @@ export default function Index() {
   const [loading, setIsLoading] = useState(false);
   const [arrayCryptos, setArrayCryptos] = useState([]);
   const [priceCrypto, setPriceCrypto] = useState("");
+  const [formFailure, setFormFailure] = useState(null);
   const [formFields, setFormFields] = useState({
     fields: { date: "", amount: "", crypto: "" },
     errors: {},
@@ -21,7 +22,7 @@ export default function Index() {
     }).then(response => {
       setArrayCryptos(response.data);
     }).catch(err => {
-      console.log(err);
+      //console.log(err);
     });
   }, []);
 
@@ -47,13 +48,15 @@ export default function Index() {
   };
 
   const onClickBuyCrypto = async (e) => {
-    //e.preventDefault();
-    console.log(e);
+    setIsLoading(true);
     const {
       fields: { date, amount, crypto },
     } = formFields;
-    if (date == "" || amount == "" || crypto == "Seleccione criptomoneda") {
-      console.log("Completar campos");
+    if (date == "" || amount == "" || crypto == "") {
+      setIsLoading(false);
+      setFormFailure({
+        message: "No completaste todos los campos. Por favor, completalos.",
+      });
     }
     else {
       axios({
@@ -69,35 +72,49 @@ export default function Index() {
         router.push("/panel");
         setIsLoading(false);
       }).catch(err => {
-        console.log(err);
+        //console.log(err);
         setIsLoading(false);
       });
     }
   };
   return (
     <div>
-      <Text fontSize='3xl' as="h1" ml="5" mt="3">Historyptos</Text>
+      <Text fontSize='3xl' as="h1" ml="5" mt="3" onClick={() => { router.push("/") }} className="title-historyptos">Historyptos</Text>
       <Stack paddingX="10">
         <Text mb='8px'>Ingrese fecha de su compra: </Text>
         <Input type="date" placeholder='22-03-2001' onChange={changeValue} name="date" isRequired />
 
-        <Text mb='8px'>Ingrese su compra: </Text>
+        <Text mb='8px'>Ingrese la cantidad de tokens comprados y el token correspondiente: </Text>
         <HStack>
-          <Input type="number" placeholder='2' onChange={changeValue} name="amount" />
+          <Input type="number" placeholder='0.000001' onChange={changeValue} name="amount" />
           <Select placeholder='Seleccione criptomoneda' onChange={changeValue} name="crypto">
             {
               arrayCryptos.map(function (item, i) {
                 return (
-                  <option value={item.id}>{item.id}</option>
+                  <option style={{ textTransform: "capitalize" }} value={item.id}>{item.id}</option>
                 );
               })
             }
           </Select>
         </HStack>
-        <Text>Usted esta comprando cada token a: {priceCrypto} USD</Text>
-        <Button size="lg" onClick={onClickBuyCrypto}>
+        <Text>Usted está comprando cada token a: {priceCrypto} USD</Text>
+        <Button size="lg" onClick={onClickBuyCrypto} disabled={loading}>
           Registrar compra
         </Button>
+        <Button size="lg" onClick={() => { router.push("/panel") }}>
+          Ir al panel
+        </Button>
+        {formFailure && (
+          <Alert status="error">
+            <AlertIcon />
+            <Box flex="1">
+              <AlertTitle>{formFailure?.title}</AlertTitle>
+              <AlertDescription display="block">
+                {formFailure?.message}
+              </AlertDescription>
+            </Box>
+          </Alert>
+        )}
       </Stack>
     </div>
 

@@ -7,11 +7,14 @@ import {
     Td,
     TableCaption,
     Stack,
-    Center
+    Center,
+    Text
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useRouter } from "next/router";
 export default function Panel() {
+    const router = useRouter();
     let urlAPI = "https://ckyu9ovtf8.execute-api.ap-south-1.amazonaws.com/crypto/purchase";
     const [loading, setIsLoading] = useState(false);
     const [arrayData, setArrayData] = useState([]);
@@ -46,6 +49,7 @@ export default function Panel() {
     }, []);
     return (
         <div>
+            <Text fontSize='3xl' as="h1" ml="5" mt="3" onClick={() => { router.push("/") }} className="title-historyptos">Historyptos</Text>
             <Center h="100%">
                 <Stack bg="whiteAlpha.900" paddingX="12" mt="10">
                     <Table variant='simple'>
@@ -55,21 +59,24 @@ export default function Panel() {
                                 <Th>Fecha</Th>
                                 <Th>Monto</Th>
                                 <Th>Crypto</Th>
-                                <Th>Precio que lo compré</Th>
-                                <Th>Precio actual</Th>
+                                <Th>Precio que lo compré (USD)</Th>
+                                <Th>Precio actual (USD)</Th>
+                                <Th>Rentabilidad (USD)</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-
                             {
                                 arrayData.map(function (item, i) {
+                                    let currentPriceCrypto = currentPrice.find(element => element.id == item.crypto)?.currentPrice;
+                                    let profit = currentPriceCrypto - item.priceCrypto;
                                     return (
                                         <Tr>
                                             <Td>{item.date}</Td>
                                             <Td isNumeric>{item.amount}</Td>
-                                            <Td>{item.crypto}</Td>
+                                            <Td style={{ textTransform: "capitalize" }}>{item.crypto}</Td>
                                             <Td>{item.priceCrypto}</Td>
-                                            <Td>{currentPrice.find(element => element.id == item.crypto).currentPrice}</Td>
+                                            <Td>{currentPriceCrypto}</Td>
+                                            <Td>{profit}</Td>
                                         </Tr>
                                     );
                                 })
