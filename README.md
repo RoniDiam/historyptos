@@ -1,7 +1,9 @@
 ## Historyptos
 
-# Justificaciones de las decisiones tomadas:
-Hice una registración de una compra donde se ingresa la fecha de compra, cantidad de tokens a comprar y que crypto. La crypto a elegir, se "saca" de la API de Coin Gecko donde tiene 100 cryptos con sus precios actuales y más información. 
+Live Preview: https://historyptos.vercel.app/
+
+### Justificaciones de las decisiones tomadas:
+Hice una registración de una compra donde se ingresa la fecha de compra, cantidad de tokens a comprar y que crypto. La crypto a elegir, se "saca" de la API de Coin Gecko donde tiene 100 cryptos con sus precios actuales y su información correspondiente. 
 
 Al ingresar el token, aparece un texto abajo diciendo el valor actual de esa crypto en particular.
 
@@ -11,4 +13,4 @@ Las tecnologías usadas para realizar el challenge fue: Node JS como framework, 
 
 No use autenticación y no permito multiples usuarios. Todas las compras colaboran a mi usuario. Esta decisión fue tomada ya que yo sería el único usuario y quiero que la información sea pública y visible, por lo tanto, todos la pueden ver.
 
-Utilicé la API de Coin Gecko (https://www.coingecko.com/en/api/documentation) ya que me resultó muy accesible traer información de esta y porque esta muy buena la documentación.
+Utilicé la API de Coin Gecko (https://www.coingecko.com/en/api/documentation) ya que me resultó muy accesible traer información de esta y porque esta muy correcta la documentación.
